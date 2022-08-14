@@ -2,7 +2,7 @@ import { Character } from "src/app/character";
 import { createEntity } from "src/app/core/createEntity";
 import createContextStore from "src/libs/createContextStore";
 
-export const CharacterStore = createContextStore({
+export const CharacterStore = createContextStore(createEntity({
   name: 'Pokemon',
   initialState: {
     data: [] as any[],
@@ -21,9 +21,9 @@ export const CharacterStore = createContextStore({
   },
   effects: {
     async requestPokemon(state: any) {
-      console.log({ state });
+      console.log({ state })
       const { results } = await fetch('https://pokeapi.co/api/v2/pokemon').then(r => r.json());
       return { type: 'setPokemon', payload: results };
     }
   }
-})
+}))
