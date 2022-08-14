@@ -5,7 +5,7 @@ import { CharacterStore } from "./store";
 const Character = () => {
   const [state, dispatch] = CharacterStore.useContext();
 
-  const setHealth = () => dispatch({ type: 'requestPokemon', payload: { limit: 5, offset: 5 } })
+  const setHealth = () => dispatch({ type: 'setHealth', payload: { health: 5 } })
 
   return (
     <Root>

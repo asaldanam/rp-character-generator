@@ -14,9 +14,4 @@ export const Character = createEntity({
       return character;
     },
   },
-  effects: {
-    async setHealth() {
-      return { type: 'setHealth', payload: { health: 5 } }
-    }
-  }
 })
