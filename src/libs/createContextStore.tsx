@@ -8,7 +8,7 @@ export default function createContextStore<
     [key: string]: (state: State, payload: any) => State
   },
   ActionTypes extends keyof Reducers,
-  Effect extends (state: State) => Promise<{type: any, payload: any}>,
+  Effect extends (state: State) => Promise<{type: any, payload: any} | void>,
   Effects extends {
     [key in keyof Partial<Reducers>]: Effect
   },
@@ -35,7 +35,7 @@ export default function createContextStore<
     const draft = actionReducer(prevState, action.payload);
     const nextState = {...draft};
     
-    console.log(`${name}/${action.type}`, prevState, nextState);
+    console.log(`${name}/${action.type}`, action.payload);
 
     return nextState;
   }
@@ -50,13 +50,12 @@ export default function createContextStore<
       //@ts-ignore
       const effect = effects[params.type] as Effect | null;
       
-      if (effect) {
-        effect(state).then((effectAction) => {
-          _dispatch(effectAction)
-        })
-      }
+      if (effect) effect(state).then((action) => {
+        if (action) _dispatch(action);
+      });
     }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const value = useMemo(() => ([state, dispatch]), [state]);
   
     return (
@@ -70,15 +69,4 @@ export default function createContextStore<
     Provider,
     useContext: () => useContext(Context),
   }
-}
-
-type Action<
-  Reducers extends {
-    [key: string]: (state: any, payload: any) => any
-  },
-  Type extends keyof Reducers = keyof Reducers,
-  Payload extends Parameters<Reducers[Type]>[1] = Parameters<Reducers[Type]>[1]
-  > = {
-    type: Type,
-    payload?: Payload
 }

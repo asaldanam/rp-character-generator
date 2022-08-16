@@ -1,11 +1,18 @@
 import Character from "./modules/character";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
 
 function App() {
   console.log('App')
   return (
-    <div className="App">
-      <Character></Character>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/character/:id" element={<Character />} />
+      </Routes>
+    </Router>
   );
 }
 
