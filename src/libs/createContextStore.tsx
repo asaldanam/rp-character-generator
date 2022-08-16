@@ -1,3 +1,4 @@
+import { debug } from "./debug";
 import { useReducer } from "react";
 import { createContext, ReactNode, useContext, useMemo } from "react";
 
@@ -32,10 +33,10 @@ export default function createContextStore<
   
   function reducer(prevState: any, action: { type: any, payload: any }) {
     const actionReducer = reducers[action.type] as (state: State, payload: any) => State;
-    const draft = actionReducer(prevState, action.payload);
-    const nextState = {...draft};
+    const nextState = actionReducer(prevState, action.payload);
     
-    console.log(`${name}/${action.type}`, action.payload);
+    // console.log(`${name}/${action.type}`, action.payload);
+    debug(`${name}/${action.type}`, prevState, nextState)
 
     return nextState;
   }

@@ -1,15 +1,13 @@
-import { useParams } from "react-router-dom";
-import { useQuery } from "src/libs/useQuery";
+// import { useParams } from "react-router-dom";
+// import { useQuery } from "src/libs/useQuery";
 import { withStore } from "src/libs/withStore";
 import styled, { css } from "styled-components";
 import { CharacterStore } from "./store";
 
 const Character = () => {
-  const params = useParams();
-  const { edit } = useQuery();
+  // const params = useParams();
+  // const { edit } = useQuery();
   const [character, dispatch] = CharacterStore.useContext();
-
-  console.log(params, edit)
 
   return (
     <Root>

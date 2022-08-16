@@ -1,11 +1,10 @@
 import { createEntity } from "../helpers/createEntity"
-import { uuid } from "../helpers/uuid";
 import { CALC_FNS, CHARACTER_STATS_INITIAL } from "./config";
 import { validateStat } from "./helpers";
 import { ICharacter, StatValue } from "./types";
 
 export const CHARACTER_INITIAL_STATE = {
-  id: uuid(),
+  id: '',
   info: {
     name: '',
     title: '',
@@ -28,20 +27,23 @@ export const Character = createEntity({
     init(_, payload: ICharacter) {
       return payload;
     },
-    updateHealth(character, payload: { health: number }) {
-      const max = CALC_FNS.healthBase(character.stats.attr_vitality);
+    updateHealth(state, payload: { health: number }) {
+      const draft = { ...state };
+      const max = CALC_FNS.healthBase(draft.stats.attr_vitality);
       const health = payload.health >= max ? max : payload.health;
-      character.condition.health = health >= 0 ? health : 0;
-      return character;
+      draft.condition.health = health >= 0 ? health : 0;
+      return draft;
     },
-    updateStat(character, payload: { stat: keyof ICharacter['stats'], value: StatValue }) {
+    updateStat(state, payload: { stat: keyof ICharacter['stats'], value: StatValue }) {
+      const draft = { ...state };
       const { isValid } = validateStat(payload.stat, payload.value);
-      if (isValid) character.stats[payload.stat] = payload.value;
-      return character;
+      if (isValid) draft.stats[payload.stat] = payload.value;
+      return draft;
     },
-    updateInfo(character, payload: Partial<ICharacter['info']>) {
-      character.info = { ...character.info, ...payload };
-      return character;
+    updateInfo(state, payload: Partial<ICharacter['info']>) {
+      const draft = { ...state };
+      draft.info = { ...draft.info, ...payload };
+      return draft;
     },
   },
 })

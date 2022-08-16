@@ -1,5 +1,3 @@
-import { uuid } from "../helpers/uuid";
-
 export const CALC_FNS = {
   /** Obtiene la puntuación de un stat a partir de su valor */
   // attrBase: (value: number) => value * 6,
