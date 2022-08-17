@@ -25,6 +25,9 @@ const Character = () => {
       <button onClick={() => dispatch({ type: 'updateInfo', payload: { avatar: 'imagen', name: 'Menzies', title: 'Señor de la muerte' } })}>
         Update info
       </button>
+      <button onClick={() => dispatch({ type: 'save', payload: undefined })}>
+        Save
+      </button>
       {/* <button onClick={() => dispatch({
         type: 'addItemToInventory', payload: {
           item: {

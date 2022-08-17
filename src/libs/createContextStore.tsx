@@ -1,4 +1,3 @@
-import { debug } from "./debug";
 import { useReducer } from "react";
 import { createContext, ReactNode, useContext, useMemo } from "react";
 
@@ -36,7 +35,7 @@ export default function createContextStore<
     const nextState = actionReducer(prevState, action.payload);
     
     // console.log(`${name}/${action.type}`, action.payload);
-    debug(`${name}/${action.type}`, prevState, nextState)
+    console.log(`${name}/${action.type}`, action.payload)
 
     return nextState;
   }
@@ -50,10 +49,13 @@ export default function createContextStore<
       _dispatch(params);
       //@ts-ignore
       const effect = effects[params.type] as Effect | null;
-      
-      if (effect) effect(state).then((action) => {
-        if (action) _dispatch(action);
-      });
+      if (!effect) return;
+      setTimeout(() => {
+        effect(state).then((action) => {
+          console.log(`${name}/${String(params.type)} EFFECT`)
+          if (action) _dispatch(action);
+        });
+      })
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
