@@ -37,7 +37,7 @@ const CALC_TEMPLATES = {
   hp: '{{value}} HP',
 };
 
-export const CHARACTER_STATS_CONFIG = {
+export const STATS_CONFIG = {
   attr_vitality: {
     txt: {
       es: {
@@ -328,8 +328,3 @@ export const CHARACTER_STATS_CONFIG = {
   },
 };
 
-export const CHARACTER_STATS_INITIAL = Object.entries(CHARACTER_STATS_CONFIG).reduce((stats, [stat, config]) => {
-  return { ...stats, [stat]: 1 }
-}, {}) as {
-  [key in keyof typeof CHARACTER_STATS_CONFIG]: number
-  };

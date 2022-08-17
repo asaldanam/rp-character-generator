@@ -1,19 +1,19 @@
-import { createEntity } from "../../helpers/createEntity";
-import { InventoryItem } from "./types";
+import { IInventory, InventoryItem } from "./types";
 
-export const Inventory = createEntity({
-  name: 'Inventory',
-  initialState: {
-    inventory: {} as { [id:string]: InventoryItem },
-  },
+export const INVENTORY_INITIAL_STATE = {
+  inventory: {} as { [id:string]: InventoryItem },
+}
+
+export const Inventory = {
+  initialState: INVENTORY_INITIAL_STATE,
   reducers: {
-    addItemToInventory(state, payload: { item: Omit<InventoryItem, 'id'> }) {
-      const [ lastId ] = Object.keys(state.inventory).sort().reverse();
+    addItemToInventory(state: IInventory , payload: { item: Omit<InventoryItem, 'id'> }) {
+      const [ lastId ] = Object.keys(state.inventory || {}).sort().reverse();
       const id = lastId ? parseInt(lastId) + 1 : 1;
 
       const item = { id, ...payload.item }
       state.inventory = { ...state.inventory, [id]: item }
       return state;
     },
-  }
-})
+  },
+}

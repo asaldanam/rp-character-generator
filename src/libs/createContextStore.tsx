@@ -6,7 +6,7 @@ import { createContext, ReactNode, useContext, useMemo } from "react";
 export default function createContextStore<
   State extends Object,
   Reducers extends {
-    [key: string]: (state: State, payload: any) => State
+    [key: string]: (state: any, payload: any) => any
   },
   ActionTypes extends keyof Reducers,
   Effect extends (state: State) => Promise<{type: any, payload: any} | void>,
