@@ -1,13 +1,20 @@
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 // import { useQuery } from "src/libs/useQuery";
+import { useEffect } from "react";
 import { withStore } from "src/libs/withStore";
 import styled, { css } from "styled-components";
 import { CharacterStore } from "./store";
 
 const Character = () => {
-  // const params = useParams();
+  const params = useParams();
   // const { edit } = useQuery();
   const [character, dispatch] = CharacterStore.useContext();
+
+  useEffect(() => {
+    if (!params?.id) return;
+    dispatch({ type: 'load', payload: { id: params.id} })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <Root>
@@ -22,25 +29,27 @@ const Character = () => {
       <button onClick={() => dispatch({ type: 'updateStat', payload: { stat: 'attr_vitality', value: character.stats.attr_vitality - 1 } })}>
         decrement vitality
       </button>
-      <button onClick={() => dispatch({ type: 'updateInfo', payload: { avatar: 'imagen', name: 'Menzies', title: 'Señor de la muerte' } })}>
+      <button onClick={() => dispatch({ type: 'updateInfo', payload: { avatar: 'imagen', name: 'Menzies Crâne', title: 'Señor de la muerte' } })}>
         Update info
       </button>
-      <button onClick={() => dispatch({ type: 'save', payload: undefined })}>
-        Save
-      </button>
-      {/* <button onClick={() => dispatch({
+      <button onClick={() => dispatch({
         type: 'addItemToInventory', payload: {
           item: {
-            icon: 1,
+            slot: 'chest',
             durability: 1,
-            slot: 'head',
+            icon: 1,
             stats: {},
-            type: 'gear'
+            type: 'gear',
           }
-        }
-      })}>
-        Add item
-      </button> */}
+        } })}>
+        addItemToInventory
+      </button>
+      <button onClick={() => dispatch({type: 'equipItemFromInventory', payload: {slot: 'chest', itemId: 1} })}>
+        equipGear
+      </button>
+      <button onClick={() => dispatch({ type: 'save', payload: null })}>
+        Save
+      </button>
     </Root>
   );
 };

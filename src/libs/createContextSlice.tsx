@@ -1,16 +1,16 @@
-import { useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { createContext, ReactNode, useContext, useMemo } from "react";
 
-/** Creates a simple store with React Context */
-export default function createContextStore<
+/** Creates a simple store slice with React Context */
+export default function createContextSlice<
   State extends Object,
   Reducers extends {
     [key: string]: (state: any, payload: any) => any
   },
   ActionTypes extends keyof Reducers,
-  Effect extends (state: State) => Promise<{type: any, payload: any} | void>,
+  EffectFn extends (state: State, payload: any) => Promise<{type: ActionTypes, payload: any} | void>,
   Effects extends {
-    [key in keyof Partial<Reducers>]: Effect
+    [key in keyof Partial<Reducers>]: EffectFn
   },
   // EffectTypes extends keyof Store['effects'],
   >(
@@ -43,23 +43,28 @@ export default function createContextStore<
   const Context = createContext<Value>([initialState as State, () => {}]);
 
   const Provider = (props: { children: ReactNode }) => {
-    const [state, _dispatch] = useReducer(reducer, initialState as State);
+    const [effect, dispatchEffect] = useState({ type: null as any, payload: null as any });
+    const [state, dispatch] = useReducer(reducer, initialState as State);
 
-    const dispatch: Dispatch = (params) => {
-      _dispatch(params);
-      //@ts-ignore
-      const effect = effects[params.type] as Effect | null;
-      if (!effect) return;
-      setTimeout(() => {
-        effect(state).then((action) => {
-          console.log(`${name}/${String(params.type)} EFFECT`)
-          if (action) _dispatch(action);
-        });
-      })
+    useEffect(() => {
+      (async () => {
+        const effectFn = (effects as any)[effect.type] as EffectFn | null;
+        if (!effectFn) return;
+        const effectAction = await effectFn(state, effect.payload);
+        if (!effectAction) return;
+        dispatch(effectAction);
+      })()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [effect])
+
+
+    const dispatchWithEffect: Dispatch = (params) => {
+      dispatch(params);
+      dispatchEffect(params);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    const value = useMemo(() => ([state, dispatch]), [state]);
+    const value = useMemo(() => ([state, dispatchWithEffect]), [state]);
   
     return (
       <Context.Provider value={value as Value}>

@@ -5,8 +5,7 @@ import {
   Route,
 } from "react-router-dom";
 
-function App() {
-  console.log('App')
+function Main() {
   return (
     <Router>
       <Routes>
@@ -16,4 +15,4 @@ function App() {
   );
 }
 
-export default App;
+export default Main;
