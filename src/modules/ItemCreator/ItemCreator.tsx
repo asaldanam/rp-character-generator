@@ -6,15 +6,15 @@ import { parseGearItemSeed } from "src/app/entities/item/domain/parseGearItemSee
 
 import { selectGearItemSeedSerialized } from "src/app/entities/item/selectors/selectGearItemSeedSerialized";
 import { selectGearItemWithDescription } from "src/app/entities/item/selectors/selectGearItemWithDescription";
+import { useContextSelector } from "src/libs/useContextSelector";
 import { withStore } from "src/libs/withStore";
 import styled, { css } from "styled-components";
 import { ItemCreatorStore } from "./store";
 
 const ItemCreator = () => {
-  const [state, dispatch] = ItemCreatorStore.useContext();
-  const { item, error } = state;
   const navigate = useNavigate();
-  const serializedSeed = selectGearItemSeedSerialized(state);
+  const [ item, dispatch ] = useContextSelector(ItemCreatorStore)(selectGearItemWithDescription);
+  const [ serializedSeed ] = useContextSelector(ItemCreatorStore)(selectGearItemSeedSerialized);
 
   useEffect(() => {
     if (!serializedSeed) return;
@@ -31,10 +31,8 @@ const ItemCreator = () => {
   return (
     <Root>
       <div>Item creator</div>
-      <pre>{JSON.stringify(selectGearItemSeedSerialized(state), null, 4)}</pre>
-      <pre>{JSON.stringify(selectGearItemWithDescription(state), null, 4)}</pre>
-      <pre>error {JSON.stringify(error, null, 4)}</pre>
-      <pre>parseGearItemSeed {JSON.stringify(parseGearItemSeed(serializedSeed || '{}'), null, 4)}</pre>
+      <pre>{JSON.stringify(item, null, 2)}</pre>
+      <pre>parseGearItemSeed {JSON.stringify(parseGearItemSeed(serializedSeed || '{}'), null, 2)}</pre>
       <button onClick={() => dispatch(
         {
           type: 'createGearItem',
