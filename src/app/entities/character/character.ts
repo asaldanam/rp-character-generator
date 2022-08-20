@@ -1,7 +1,7 @@
 import slugify from "slugify";
 import { createDraft } from "src/app/helpers/createDraft";
 import { Info } from "./info";
-import { Inventory } from "./Inventory";
+import { Inventory } from "./inventory";
 import { Stats } from "./stats";
 import { CharacterState } from "./types";
 

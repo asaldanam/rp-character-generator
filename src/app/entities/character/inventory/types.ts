@@ -1,11 +1,6 @@
-export interface InventoryItem {
-  id: number;
-  durability: number;
-  stats: { [stat: string]: number };
-  slot: keyof typeof InventoryGearSlots;
-  type: 'gear';
-  icon: number;
-}
+import { Item } from "../../item/types";
+
+export type InventoryItem = Item
 
 export type InventoryState = {
   inventory: {

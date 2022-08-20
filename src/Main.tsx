@@ -1,15 +1,17 @@
-import Character from "./modules/character";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
 } from "react-router-dom";
+import { routes } from "./routes";
 
 function Main() {
   return (
     <Router>
       <Routes>
-        <Route path="/character/:id" element={<Character />} />
+        {Object.entries(routes).map(([path, config]) => (
+          <Route path={path} element={<config.component />} key={path} />
+        ))}
       </Routes>
     </Router>
   );

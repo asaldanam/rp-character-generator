@@ -1,10 +1,10 @@
+import { Character } from "src/app/entities/character";
 import createContextSlice from "src/libs/createContextSlice";
 import { LocalStorageCharacterService } from "./services/localStorage";
-import App from "src/app";
 
 export const CharacterStore = createContextSlice({
   name: 'Character',
-  ...App.Character,
+  ...Character,
   effects: {
     save: LocalStorageCharacterService.save,
     async load(state, payload) {

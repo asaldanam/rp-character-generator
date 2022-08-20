@@ -30,9 +30,9 @@ export const Inventory = {
     equipItemFromInventory(state: InventoryState, payload: { itemId: InventoryGearItemId, slot: keyof typeof InventoryGearSlots }) {
       const draft = createDraft(state);
       const item = draft.inventory.bag[payload.itemId];
-      if (!item) return draft;
-
-      draft.inventory.gear[payload.slot] = item.id;
+      if (item?.type !== 'gear') return draft;
+      
+      draft.inventory.gear[payload.slot] = payload.itemId;
       return draft;
     }
   },
