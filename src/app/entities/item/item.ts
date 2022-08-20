@@ -1,5 +1,5 @@
 import { createDraft } from "src/app/helpers/createDraft";
-import { getGearItemFromSeed } from "./helpers/getGearItemFromSeed";
+import { getGearItemFromSeed } from "./domain/getGearItemFromSeed";
 import { GearItemSeed, ItemState } from "./types";
 
 export const ITEM_INITIAL_STATE: ItemState = {

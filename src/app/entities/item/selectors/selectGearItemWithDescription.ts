@@ -1,7 +1,7 @@
 
-import { getGearItemName } from "../helpers/getGearItemName";
-import { getGearItemQuality } from "../helpers/getGearItemQuality";
-import { getGearItemStatsWithValues } from "../helpers/getGearItemStatsWithValues";
+import { getGearItemName } from "../domain/getGearItemName";
+import { getGearItemQuality } from "../domain/getGearItemQuality";
+import { getGearItemStatsWithValues } from "../domain/getGearItemStatsWithValues";
 import { ItemState } from "../types";
 
 export function selectGearItemWithDescription(state: ItemState) {

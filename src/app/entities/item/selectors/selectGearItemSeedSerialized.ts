@@ -1,4 +1,4 @@
-import { serializeGearItemSeed } from "../helpers/serializeGearItemSeed";
+import { serializeGearItemSeed } from "../domain/serializeGearItemSeed";
 import { ItemState } from "../types";
 
 export function selectGearItemSeedSerialized(state: ItemState) {

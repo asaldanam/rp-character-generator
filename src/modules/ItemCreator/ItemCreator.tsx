@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { STATS_CONFIG } from "src/app/entities/character/stats/config";
 import { Stat } from "src/app/entities/character/stats/types";
-import { parseGearItemSeed } from "src/app/entities/item/helpers/parseGearItemSeed";
+import { parseGearItemSeed } from "src/app/entities/item/domain/parseGearItemSeed";
 
 import { selectGearItemSeedSerialized } from "src/app/entities/item/selectors/selectGearItemSeedSerialized";
 import { selectGearItemWithDescription } from "src/app/entities/item/selectors/selectGearItemWithDescription";
