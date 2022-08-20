@@ -6,10 +6,8 @@ export function getGearItemFromSeed(seed: GearItemSeed) {
   const item: GearItem = {
     ...seed,
     type: 'gear',
-    icon: 1, // TODO
     durability: 1,
   }
-
   return { item, error };
 }
 

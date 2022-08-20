@@ -1,4 +1,4 @@
-import { GearItem, GearItemSlot } from "./types";
+import { GearItem } from "./types";
 
 export const GEAR_ITEM_ATTRIBUTES = {
   vit: 'attr_vitality',

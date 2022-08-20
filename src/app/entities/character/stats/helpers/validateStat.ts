@@ -1,11 +1,4 @@
-import { Stat, Stats, StatValue } from "./types";
-
-/** Valida un conjunto de estadísticas */
-export function validateStats(stats: Stats) {
-  Object.entries(stats).forEach(([stat, value]) => {
-    validateStat(stat as keyof Stats, value as number);
-  });
-}
+import { Stat, StatValue } from "../types";
 
 /** Valida una estadística */
 export function validateStat(stat: Stat, value: StatValue) {

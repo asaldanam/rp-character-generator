@@ -1,8 +1,8 @@
 import { StatValue } from './types';
 import { CALC_FNS, STATS_CONFIG } from './config';
-import { validateStat } from './helpers';
 import { StatsState } from './types';
 import { createDraft } from 'src/app/helpers/createDraft';
+import { validateStat } from './helpers/validateStat';
 
 export const STATS_INITIAL_STATE = {
   condition: {

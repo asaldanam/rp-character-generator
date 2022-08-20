@@ -28,7 +28,6 @@ export interface ConsumableItem extends ItemBase {
 
 export interface ItemBase {
   type: keyof typeof ItemTypes;
-  icon: number;
 }
 
 export enum GearItemSlot {
